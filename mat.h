@@ -19,7 +19,7 @@ public:
     // Constructors
     mat(); // default const
     mat(int rows, int cols); // from rows and cols
-    mat(const mat &p_mat);
+    mat(const mat &p_mat); // from matrix
 
     // Operators
     double& operator()(int x, int y);

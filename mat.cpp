@@ -144,10 +144,10 @@ mat mat::identity(int size) {
  */
 
 void mat::print() {
-    for (int i = 0; i < cols; ++i) {
+    for (int i = 0; i < rows; ++i) {
         std::cout << "(";
-        for (int j = 0; j < rows; ++j) {
-            std::cout << mat_data[j][i];
+        for (int j = 0; j < cols; ++j) {
+            std::cout << mat_data[i][j];
             if (j < rows - 1) {
                 std::cout << ", ";
             }
