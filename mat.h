@@ -15,6 +15,7 @@ private:
     int rows, cols;
 
     void AllocateSpace();
+    double DeterminantCall(const mat& p_mat);
 public:
     // Constructors
     mat(); // default const
@@ -29,11 +30,14 @@ public:
     mat& operator*=(double rhs);
     mat& operator*=(const mat &rhs);
 
+    // Operations
     mat& transpose();
+    mat& RemoveRow(int row);
+    mat& RemoveCol(int col);
+    double det();
 
     // Static functions
     static mat identity(int size);
-
 
     // Misc functions
     void print();

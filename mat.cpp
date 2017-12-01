@@ -127,6 +127,41 @@ mat& mat::transpose() {
     return return_val;
 }
 
+mat &mat::RemoveRow(int row) {
+    if (row >= rows) {
+        std::cerr << "cmatrix error: row out of range for row removal, "
+                "returning original matrix.";
+        return *this;
+    }
+
+    mat_data.erase(mat_data.begin() + row);
+    rows--;
+    return *this;
+}
+
+mat &mat::RemoveCol(int col) {
+    if (col >= cols) {
+        std::cerr << "cmatrix error: column out of range for column removal, "
+                "returning original matrix";
+        return *this;
+    }
+
+    for (int i = 0; i < cols; ++i) {
+        mat_data[i].erase(mat_data[i].begin() + col);
+    }
+    cols--;
+    return *this;
+}
+
+double mat::det() {
+    if (rows != cols) {
+        std::cerr << "cmatrix error: non-square matrix for determinant,"
+                "returning 0." << std::endl;
+        return 0;
+    }
+
+}
+
 /*
  * Static functions
  */
@@ -148,7 +183,7 @@ void mat::print() {
         std::cout << "(";
         for (int j = 0; j < cols; ++j) {
             std::cout << mat_data[i][j];
-            if (j < rows - 1) {
+            if (j < cols - 1) {
                 std::cout << ", ";
             }
         }
@@ -163,5 +198,14 @@ void mat::print() {
 void mat::AllocateSpace() {
     auto temp_col = std::vector<double>(static_cast<unsigned int>(cols));
     mat_data = std::vector<std::vector<double>>(static_cast<unsigned int>(rows), temp_col);
+}
+
+double mat::DeterminantCall(const mat& p_mat) {
+    if (p_mat.rows == 1) {
+        return p_mat.mat_data[0][0];
+    }
+    for (int i = 0; i < p_mat.rows; ++i) {
+
+    }
 }
 
