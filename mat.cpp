@@ -33,7 +33,7 @@ mat::mat(const mat& p_mat) : rows(p_mat.rows), cols(p_mat.cols) {
     }
 }
 
-double& mat::operator()(int x, int y) {
+long double& mat::operator()(int x, int y) {
     return mat_data[x][y];
 }
 
@@ -86,7 +86,7 @@ mat& mat::operator-=(const mat& rhs) {
     return *this;
 }
 
-mat& mat::operator*=(double rhs) {
+mat& mat::operator*=(long double rhs) {
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             mat_data[i][j] *= rhs;
@@ -102,64 +102,94 @@ mat& mat::operator*=(const mat& rhs) {
                 "returning original matrix." << std::endl;
     }
 
-    mat return_val(rows, cols);
+    mat return_value(rows, cols);
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             for (int k = 0; k < cols; ++k) {
-                return_val.mat_data[i][j] += mat_data[i][k] * rhs.mat_data[k][j];
+                return_value.mat_data[i][j] += mat_data[i][k] * rhs.mat_data[k][j];
             }
         }
     }
 
-    return (*this = return_val);
+    return (*this = return_value);
 }
 
-mat& mat::transpose() {
-    mat return_val(cols, rows);
+mat &mat::operator/=(long double rhs) {
+    if (rhs == 0) {
+        std::cerr << "cmatrix error: division by 0 in matrix scalar division,"
+                "returning original matrix.";
+        return *this;
+    }
+
+    *this *= pow(rhs, -1);
+    return *this;
+}
+
+mat mat::transpose() {
+    mat return_value(cols, rows);
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            return_val.mat_data[j][i] = mat_data[i][j];
+            return_value.mat_data[j][i] = mat_data[i][j];
         }
     }
 
-    return return_val;
+    return return_value;
 }
 
-mat &mat::RemoveRow(int row) {
-    if (row >= rows) {
+mat mat::RemoveRow(int row) {
+    if (row >= rows || row < 0) {
         std::cerr << "cmatrix error: row out of range for row removal, "
                 "returning original matrix.";
         return *this;
     }
 
-    mat_data.erase(mat_data.begin() + row);
-    rows--;
-    return *this;
+    mat return_value(*this);
+    return_value.mat_data.erase(return_value.mat_data.begin() + row);
+    return_value.rows--;
+    return return_value;
 }
 
-mat &mat::RemoveCol(int col) {
-    if (col >= cols) {
+mat mat::RemoveCol(int col) {
+    if (col >= cols || col < 0) {
         std::cerr << "cmatrix error: column out of range for column removal, "
                 "returning original matrix";
         return *this;
     }
 
-    for (int i = 0; i < cols; ++i) {
-        mat_data[i].erase(mat_data[i].begin() + col);
+    mat return_value(*this);
+    for (int i = 0; i < rows; ++i) {
+        return_value.mat_data[i].erase(return_value.mat_data[i].begin() + col);
     }
-    cols--;
-    return *this;
+    return_value.cols--;
+    return return_value;
 }
 
-double mat::det() {
+long double mat::det() {
     if (rows != cols) {
         std::cerr << "cmatrix error: non-square matrix for determinant,"
                 "returning 0." << std::endl;
         return 0;
     }
+    return DeterminantCall(*this);
+}
 
+mat mat::inverse() {
+    if (rows != cols) {
+        std::cerr << "cmatrix error: non-square matrix for inverse,"
+                "returning original matrix." << std::endl;
+        return *this;
+    }
+
+    mat return_value(rows, cols);
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            return_value.mat_data[i][j] = pow(-1, i + j) * RemoveRow(i).RemoveCol(j).det() / det();
+        }
+    }
+    return_value = return_value.transpose();
+    return return_value;
 }
 
 /*
@@ -167,11 +197,11 @@ double mat::det() {
  */
 
 mat mat::identity(int size) {
-    mat return_val(size, size);
+    mat return_value(size, size);
     for (int i = 0; i < size; ++i) {
-        return_val(i, i) = 1;
+        return_value(i, i) = 1;
     }
-    return return_val;
+    return return_value;
 }
 
 /*
@@ -196,16 +226,20 @@ void mat::print() {
  */
 
 void mat::AllocateSpace() {
-    auto temp_col = std::vector<double>(static_cast<unsigned int>(cols));
-    mat_data = std::vector<std::vector<double>>(static_cast<unsigned int>(rows), temp_col);
+    auto temp_col = std::vector<long double>(static_cast<unsigned int>(cols));
+    mat_data = std::vector<std::vector<long double>>(static_cast<unsigned int>(rows), temp_col);
 }
 
-double mat::DeterminantCall(const mat& p_mat) {
+long double mat::DeterminantCall(mat& p_mat) {
     if (p_mat.rows == 1) {
         return p_mat.mat_data[0][0];
     }
-    for (int i = 0; i < p_mat.rows; ++i) {
-
+    long double total = 0;
+    mat temp;
+    for (int i = 0; i < p_mat.cols; ++i) {
+        temp = p_mat.RemoveRow(0).RemoveCol(i);
+        total += pow(-1, i) * p_mat.mat_data[0][i] * DeterminantCall(temp);
     }
+    return total;
 }
 

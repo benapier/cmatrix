@@ -11,11 +11,11 @@
 
 class mat {
 private:
-    std::vector<std::vector<double>> mat_data;
+    std::vector<std::vector<long double>> mat_data;
     int rows, cols;
 
     void AllocateSpace();
-    double DeterminantCall(const mat& p_mat);
+    long double DeterminantCall(mat& p_mat);
 public:
     // Constructors
     mat(); // default const
@@ -23,18 +23,20 @@ public:
     mat(const mat &p_mat); // from matrix
 
     // Operators
-    double& operator()(int x, int y);
+    long double& operator()(int x, int y);
     mat& operator=(const mat &rhs);
     mat& operator+=(const mat &rhs);
     mat& operator-=(const mat &rhs);
-    mat& operator*=(double rhs);
+    mat& operator*=(long double rhs);
     mat& operator*=(const mat &rhs);
+    mat& operator/=(long double rhs);
 
     // Operations
-    mat& transpose();
-    mat& RemoveRow(int row);
-    mat& RemoveCol(int col);
-    double det();
+    mat transpose();
+    mat RemoveRow(int row);
+    mat RemoveCol(int col);
+    long double det();
+    mat inverse();
 
     // Static functions
     static mat identity(int size);
