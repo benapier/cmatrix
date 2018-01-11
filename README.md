@@ -1,35 +1,13 @@
-# cmatrix
-C++ matrix library.
+A simple matrix library in C++ which takes advantage of operator overloading so that matrices can be treated like any other common data types (double, integer, etc.).
 
-# Usage
-We can use the following syntax to define matrices.
-```c++
-mat mat_a = mat(2, 2); // Creates a 2 x 2 matrix filled with 0s
-mat_a = mat::identity(2) // Creates a 2 x 2 identity matrix
-```
-We can also access individual values.
-```c++
-mat_a(0, 0) = 5; // Sets the first value to 5
-```
-## Addition
-```c++
-mat_a = mat_b + mat_c;
-```
+Current features:
+* Basic matrix arithmetic (addition, subtraction, multiplication)
+* Basic scalar arithmetic (multiplication, division)
+* Transposition
+* Determinants
+* Inverse
 
-## Subtraction
-```c++
-mat_a = mat_b - mat_c;
-```
-
-## Multiplication
-```c++
-mat_a = mat_b * mat_c
-```
-## Transposition
-```c++
-mat_a = mat_b.transpose()
-```
-## Determinant
-```c++
-float_a = mat_a.det()
-```
+Planned features:
+* Concatination
+* Kronecker multiplication
+* Hadanard multiplication
