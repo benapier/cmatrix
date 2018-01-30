@@ -126,7 +126,7 @@ mat &mat::operator/=(long double rhs) {
     return *this;
 }
 
-mat mat::transpose() {
+mat mat::Transpose() {
     mat return_value(cols, rows);
 
     for (int i = 0; i < rows; ++i) {
@@ -175,7 +175,7 @@ long double mat::det() {
     return DeterminantCall(*this);
 }
 
-mat mat::inverse() {
+mat mat::Inverse() {
     if (rows != cols) {
         std::cerr << "cmatrix error: non-square matrix for inverse,"
                 "returning original matrix." << std::endl;
@@ -188,7 +188,7 @@ mat mat::inverse() {
             return_value.mat_data[i][j] = pow(-1, i + j) * RemoveRow(i).RemoveCol(j).det() / det();
         }
     }
-    return_value = return_value.transpose();
+    return_value = return_value.Transpose();
     return return_value;
 }
 
@@ -196,7 +196,7 @@ mat mat::inverse() {
  * Static functions
  */
 
-mat mat::identity(int size) {
+mat mat::Identity(int size) {
     mat return_value(size, size);
     for (int i = 0; i < size; ++i) {
         return_value(i, i) = 1;

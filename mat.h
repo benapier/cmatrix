@@ -32,14 +32,15 @@ public:
     mat& operator/=(long double rhs);
 
     // Operations
-    mat transpose();
+    mat Transpose();
     mat RemoveRow(int row);
     mat RemoveCol(int col);
     long double det();
-    mat inverse();
+    mat Inverse();
+    
 
     // Static functions
-    static mat identity(int size);
+    static mat Identity(int size);
 
     // Misc functions
     void print();
