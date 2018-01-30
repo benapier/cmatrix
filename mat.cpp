@@ -73,7 +73,7 @@ mat& mat::operator+=(const mat& rhs) {
 mat& mat::operator-=(const mat& rhs) {
     if (rows != rhs.rows || cols != rhs.cols) {
         std::cerr << "cmatrix error: mismatch in size for matrix subtraction, "
-                "returning original matrix." << std::endl;
+                     "returning original matrix." << std::endl;
         return *this;
     }
 
@@ -99,7 +99,7 @@ mat& mat::operator*=(long double rhs) {
 mat& mat::operator*=(const mat& rhs) {
     if (cols != rhs.rows) {
         std::cerr << "cmatrix error: mismatch in size for matrix multiplication, "
-                "returning original matrix." << std::endl;
+                     "returning original matrix." << std::endl;
     }
 
     mat return_value(rows, cols);
@@ -118,7 +118,7 @@ mat& mat::operator*=(const mat& rhs) {
 mat &mat::operator/=(long double rhs) {
     if (rhs == 0) {
         std::cerr << "cmatrix error: division by 0 in matrix scalar division,"
-                "returning original matrix.";
+                     "returning original matrix." << std::endl;
         return *this;
     }
 
@@ -141,7 +141,7 @@ mat mat::Transpose() {
 mat mat::RemoveRow(int row) {
     if (row >= rows || row < 0) {
         std::cerr << "cmatrix error: row out of range for row removal, "
-                "returning original matrix.";
+                     "returning original matrix." << std::endl;
         return *this;
     }
 
@@ -154,7 +154,7 @@ mat mat::RemoveRow(int row) {
 mat mat::RemoveCol(int col) {
     if (col >= cols || col < 0) {
         std::cerr << "cmatrix error: column out of range for column removal, "
-                "returning original matrix";
+                     "returning original matrix" << std::endl;
         return *this;
     }
 
@@ -169,7 +169,7 @@ mat mat::RemoveCol(int col) {
 long double mat::det() {
     if (rows != cols) {
         std::cerr << "cmatrix error: non-square matrix for determinant,"
-                "returning 0." << std::endl;
+                     "returning 0." << std::endl;
         return 0;
     }
     return DeterminantCall(*this);
@@ -178,7 +178,7 @@ long double mat::det() {
 mat mat::Inverse() {
     if (rows != cols) {
         std::cerr << "cmatrix error: non-square matrix for inverse,"
-                "returning original matrix." << std::endl;
+                     "returning original matrix." << std::endl;
         return *this;
     }
 
