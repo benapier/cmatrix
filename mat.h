@@ -37,7 +37,7 @@ public:
     Mat RemoveCol(int col);
     long double det();
     Mat Inverse();
-    
+    Mat HorizontalConcatenate(const Mat &rhs);
 
     // Static functions
     static Mat Identity(int size);

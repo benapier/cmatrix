@@ -192,6 +192,25 @@ Mat Mat::Inverse() {
     return return_value;
 }
 
+Mat Mat::HorizontalConcatenate(const Mat &rhs) {
+    if (rows != rows) {
+        std::cerr << "cmatrix error: cannot horizontal concatenate"
+                     "two matrices of unequal row count, returning"
+                     "original matrix" << std::endl;
+        return *this;
+    }
+
+    Mat return_value(rows, cols + rhs.cols);
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            return_value.mat_data[i][j] = mat_data[i][j];
+        }
+        for (int j = 0; j < rhs.cols; ++j) {
+            return_value.mat_data[i][j + cols] = rhs.mat_data[i][j];
+        }
+    }
+}
+
 /*
  * Static functions
  */
