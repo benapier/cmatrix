@@ -235,7 +235,7 @@ long double Mat::DeterminantCall(Mat& p_mat) {
         return p_mat.mat_data[0][0];
     }
     long double total = 0;
-    mat temp;
+    Mat temp;
     for (int i = 0; i < p_mat.cols; ++i) {
         temp = p_mat.RemoveRow(0).RemoveCol(i);
         total += pow(-1, i) * p_mat.mat_data[0][i] * DeterminantCall(temp);
