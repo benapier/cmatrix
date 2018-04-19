@@ -9,37 +9,38 @@
 #include <vector>
 #include <iostream>
 
-class mat {
+class Mat {
 private:
     std::vector<std::vector<long double>> mat_data;
     int rows, cols;
 
     void AllocateSpace();
-    long double DeterminantCall(mat& p_mat);
+    long double DeterminantCall(Mat& p_mat);
 public:
     // Constructors
-    mat(); // default const
-    mat(int rows, int cols); // from rows and cols
-    mat(const mat &p_mat); // from matrix
+    Mat(); // default const
+    Mat(int rows, int cols); // from rows and cols
+    Mat(const Mat &p_mat); // from matrix
 
     // Operators
     long double& operator()(int x, int y);
-    mat& operator=(const mat &rhs);
-    mat& operator+=(const mat &rhs);
-    mat& operator-=(const mat &rhs);
-    mat& operator*=(long double rhs);
-    mat& operator*=(const mat &rhs);
-    mat& operator/=(long double rhs);
+    Mat& operator=(const Mat &rhs);
+    Mat& operator+=(const Mat &rhs);
+    Mat& operator-=(const Mat &rhs);
+    Mat& operator*=(long double rhs);
+    Mat& operator*=(const Mat &rhs);
+    Mat& operator/=(long double rhs);
 
     // Operations
-    mat transpose();
-    mat RemoveRow(int row);
-    mat RemoveCol(int col);
+    Mat Transpose();
+    Mat RemoveRow(int row);
+    Mat RemoveCol(int col);
     long double det();
-    mat inverse();
+    Mat Inverse();
+    Mat HorizontalConcatenate(const Mat &rhs);
 
     // Static functions
-    static mat identity(int size);
+    static Mat Identity(int size);
 
     // Misc functions
     void print();
