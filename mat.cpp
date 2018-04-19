@@ -117,7 +117,7 @@ Mat& Mat::operator*=(const Mat& rhs) {
 
 Mat &Mat::operator/=(long double rhs) {
     if (rhs == 0) {
-        std::cerr << "cmatrix error: division by 0 in matrix scalar division,"
+        std::cerr << "cmatrix error: division by 0 in matrix scalar division, "
                      "returning original matrix." << std::endl;
         return *this;
     }
@@ -168,7 +168,7 @@ Mat Mat::RemoveCol(int col) {
 
 long double Mat::det() {
     if (rows != cols) {
-        std::cerr << "cmatrix error: non-square matrix for determinant,"
+        std::cerr << "cmatrix error: non-square matrix for determinant, "
                      "returning 0." << std::endl;
         return 0;
     }
@@ -177,7 +177,7 @@ long double Mat::det() {
 
 Mat Mat::Inverse() {
     if (rows != cols) {
-        std::cerr << "cmatrix error: non-square matrix for inverse,"
+        std::cerr << "cmatrix error: non-square matrix for inverse, "
                      "returning original matrix." << std::endl;
         return *this;
     }
@@ -193,9 +193,9 @@ Mat Mat::Inverse() {
 }
 
 Mat Mat::HorizontalConcatenate(const Mat &rhs) {
-    if (rows != rows) {
-        std::cerr << "cmatrix error: cannot horizontal concatenate"
-                     "two matrices of unequal row count, returning"
+    if (rhs.rows != Mat::rows) {
+        std::cerr << "cmatrix error: cannot horizontally concatenate "
+                     "two matrices of unequal row count, returning "
                      "original matrix" << std::endl;
         return *this;
     }
@@ -209,6 +209,7 @@ Mat Mat::HorizontalConcatenate(const Mat &rhs) {
             return_value.mat_data[i][j + cols] = rhs.mat_data[i][j];
         }
     }
+    return return_value;
 }
 
 /*
